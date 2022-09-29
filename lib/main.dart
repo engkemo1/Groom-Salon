@@ -4,6 +4,7 @@ import 'package:salon/viewModel/database_local/CacheHelper.dart';
 import 'package:salon/viewModel/get_image.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:salon/viewModel/getx_controller/appoinment_controller/book_controller.dart';
 import 'package:salon/viewModel/getx_controller/auth_controller/auth_controller.dart';
 import 'package:salon/viewModel/routes/app_pages.dart';
 import 'firebase_options.dart';
@@ -12,7 +13,11 @@ void main() async{
   await CacheHelper.init();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-  ).then((value) =>  Get.put(AuthController()));
+  ).then((value) =>  Get.put(AuthController())
+
+
+  );
+
 
   runApp(MyApp());
 }

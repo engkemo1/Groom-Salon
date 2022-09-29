@@ -10,12 +10,14 @@ abstract class Routes {
   static const salonRegister = _Paths.salonRegister;
   static const addSpecialist = _Paths.addSpecialist;
   static const salonOwner = _Paths.salonOwner;
+  static const bookPage = _Paths.bookPage;
 
 }
 
 abstract class _Paths {
   static const home = '/home';
   static const salonOwner = '/salonOwner';
+  static const bookPage = '/bookPage';
 
   static const salonRegister = '/salonRegister';
   static const addSpecialist = '/addSpecialist';

@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:multiselect/multiselect.dart';
 import 'package:path/path.dart';
 import 'package:salon/widgets/TextFormField.dart';
 import 'package:salon/widgets/button.dart';
