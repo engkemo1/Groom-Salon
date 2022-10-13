@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -23,6 +24,7 @@ class AuthController extends GetxController  with GetSingleTickerProviderStateMi
   final TextEditingController password = TextEditingController();
   final TextEditingController confirmPassword = TextEditingController();
   final TextEditingController phone = TextEditingController();
+  final TextEditingController salonId = TextEditingController();
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
   TabController? tabController;
@@ -30,8 +32,9 @@ class AuthController extends GetxController  with GetSingleTickerProviderStateMi
 
   User get user => _user.value!;
   var isSignedIn = false.obs;
-
-  final selected = "Role type".obs;
+File? imagFile;
+String? image;
+  var selected = "Role type".obs;
   void setSelected(String value){
     selected.value = value;
   }
@@ -89,6 +92,7 @@ class AuthController extends GetxController  with GetSingleTickerProviderStateMi
       CacheHelper.put(key: 'uid', value: user.uid);
         email.clear();
         password.clear();
+
         Indicator.closeLoading();
 
       } else {
@@ -120,6 +124,8 @@ class AuthController extends GetxController  with GetSingleTickerProviderStateMi
     CacheHelper.put(key: 'phone', value: user.phone!);
     CacheHelper.put(key: 'password', value: user.password!);
     CacheHelper.put(key: 'role', value: user.role!);
+
+
   }
 
   Future<void> getUser({required String email}) async {
@@ -177,6 +183,7 @@ update();
 
       emailLogin.clear();
       passwordLogin.clear();
+      email.clear();phone.clear();confirmPassword.clear();
       Indicator.closeLoading();
 
     } catch (e) {
@@ -215,5 +222,51 @@ update();
           colorText: Colors.blue);
     }
   }
+ updateInformation()async{
+   await FirebaseFirestore.instance
+       .collection('users')
+       .doc(CacheHelper.get(key: 'uid'))
+       .update({
+     'password': password.text.isNotEmpty
+         ? password.text
+         : CacheHelper.get(key: 'password'),
+     'name': fullName.text.isNotEmpty
+         ? fullName.text
+         : CacheHelper.get(key: 'name'),
+     'email': email.text.isNotEmpty
+         ? email.text
+         : CacheHelper.get(key: 'email'),
+     'phone': phone.text.isNotEmpty
+         ? phone.text
+         : CacheHelper.get(key: 'phone'),
 
+
+   }).then((value) {
+     CacheHelper.put(
+       key: 'name',
+       value: fullName.text.isNotEmpty
+           ? fullName.text
+           : CacheHelper.get(key: 'name'),
+     );
+     CacheHelper.put(
+         key: 'email',
+         value: email.text.isNotEmpty
+             ? email.text
+             : CacheHelper.get(key: 'email'));
+     CacheHelper.put(
+         key: 'phone', value:  phone.text.isNotEmpty
+         ? phone.text
+         : CacheHelper.get(key: 'phone'));
+
+     CacheHelper.put(
+       key: 'password',
+       value: password.text.isNotEmpty
+           ? password.text
+           : CacheHelper.get(key: 'password'),
+     );
+
+
+   });
+
+}
 }

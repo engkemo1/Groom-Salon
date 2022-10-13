@@ -81,13 +81,16 @@ class BookPage extends GetView<BookController> {
                 .where('salonId', isEqualTo: salonId.toString())
                 .snapshots(),
             builder: (context, AsyncSnapshot snapshot) {
-              var snap = snapshot.data.docs;
 
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const CircularProgressIndicator.adaptive(
-                  backgroundColor: UIData.mainColor,
+                return const Center(
+                  child:  CircularProgressIndicator.adaptive(
+                    backgroundColor: UIData.mainColor,
+                  ),
                 );
               } else {
+                var snap = snapshot.data.docs;
+
                 return GetBuilder<BookController>(
                     init: Get.put(BookController()),
                     initState: (_) {
@@ -118,7 +121,7 @@ class BookPage extends GetView<BookController> {
                                       leftMargin: 20,
                                       monthColor: Colors.white,
                                       dayColor: Colors.white,
-                                      activeDayColor: Colors.pink,
+                                      activeDayColor: UIData.darkColor,
                                       activeBackgroundDayColor:
                                           UIData.mainColor,
                                       dotsColor: Color(0xFF333A47),
@@ -159,8 +162,8 @@ class BookPage extends GetView<BookController> {
                                               color: Colors.white),
                                           activeTextStyle: const TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              color: Colors.pink),
-                                          borderColor: Colors.black,
+                                              color: UIData.darkColor),
+                                          borderColor: UIData.darkColor,
                                           activeBorderColor: Colors.transparent,
                                           backgroundColor: Colors.white12,
                                           activeBackgroundColor:

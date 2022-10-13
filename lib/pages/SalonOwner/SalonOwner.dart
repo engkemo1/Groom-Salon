@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../uidata.dart';
 import '../home.dart';
-import '../profileScreen.dart';
+import '../profile/profileScreen.dart';
 import 'SalonRgister/add_salon_specialist.dart';
 
 class SalonOwner extends StatefulWidget {

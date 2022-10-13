@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:salon/pages/profileScreen.dart';
+import 'package:salon/pages/profile/profileScreen.dart';
 
 import '../uidata.dart';
 import '../viewModel/database_local/CacheHelper.dart';
@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
 
         centerTitle: true,
         leading: IconButton(
-            icon: Icon(Icons.short_text_rounded, color: UIData.lightColor,size: 40,),
+            icon: Icon(Icons.short_text_rounded, color: UIData.mainColor,size: 40,),
             onPressed: () {
               _scaffoldKey.currentState!.openDrawer();
             }),
@@ -209,14 +209,14 @@ Divider(color: Colors.white,),
         children: [
            UserAccountsDrawerHeader(
 
-              decoration: BoxDecoration(color: UIData.mainColor.withOpacity(0.7),),
+              decoration: const BoxDecoration(color: UIData.darkColor),
               currentAccountPicture: const CircleAvatar(
                 radius: 50.0,
                 backgroundColor: Color(0xFF778899),
                 backgroundImage:
                 AssetImage("images/profile.jpg"),
-              ), accountName:  Text(CacheHelper.get(key: 'name')??'',style: const TextStyle(color: Colors.black)),
-              accountEmail:  Text(CacheHelper.get(key: 'email')??'',style: const TextStyle(color: Colors.black),),
+              ), accountName:  Text(CacheHelper.get(key: 'name')??'',style: const TextStyle(color:Colors.white)),
+              accountEmail:  Text(CacheHelper.get(key: 'email')??'',style: const TextStyle(color: Colors.grey),),
             ),
 
           Padding(

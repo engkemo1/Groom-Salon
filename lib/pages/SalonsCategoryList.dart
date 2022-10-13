@@ -18,7 +18,7 @@ class SalonCategoryList extends StatelessWidget {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: Icon(Icons.arrow_back_ios_new),
+          icon: Icon(Icons.arrow_back_ios_new,color: UIData.mainColor ,),
         ),
         centerTitle: true,
         title: Text(
@@ -30,14 +30,15 @@ class SalonCategoryList extends StatelessWidget {
       body: StreamBuilder(
           stream: FirebaseFirestore.instance.collection('salon').snapshots(),
           builder: (context, AsyncSnapshot snapshot) {
-            var snap = snapshot.data.docs;
-            return snapshot.connectionState == ConnectionState.waiting
-                ? const Center(
+           if(  snapshot.connectionState == ConnectionState.waiting){
+             return Center(
                     child: CircularProgressIndicator.adaptive(
                       backgroundColor: UIData.mainColor,
                     ),
-                  )
-                : Padding(
+                  );}else{
+
+            var snap =snapshot.data.docs;
+        return    Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                     child: SingleChildScrollView(
                       child: Column(
@@ -47,7 +48,7 @@ class SalonCategoryList extends StatelessWidget {
                             (index) => SizedBox(
                                 height: 150,
                                 child: Card(
-                                  color: UIData.lightColor,
+                                  color: UIData.darkColor,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(20)),
                                   child: Row(
@@ -73,7 +74,7 @@ class SalonCategoryList extends StatelessWidget {
                                             snap[index]['salonName'],
                                             style: const TextStyle(
                                                 fontSize: 14,
-                                                fontWeight: FontWeight.bold),
+                                                fontWeight: FontWeight.bold,color: Colors.white),
                                           ),
                                           const SizedBox(
                                             height: 10,
@@ -93,7 +94,7 @@ class SalonCategoryList extends StatelessWidget {
                                             style: const TextStyle(
                                                 fontSize: 9,
                                                 fontWeight: FontWeight.normal,
-                                                color: Colors.black),
+                                                color: Colors.white),
                                           ),
                                         ],
                                       ),
@@ -101,8 +102,7 @@ class SalonCategoryList extends StatelessWidget {
                                         width: 10,
                                       ),
                                       Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
+                                       mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
                                           ElevatedButton(
                                             onPressed: () {
@@ -118,10 +118,10 @@ class SalonCategoryList extends StatelessWidget {
 
                                               ));
                                             },
-                                            child: Center(
+                                            child: const Center(
                                               child: Text(
                                                 'Book Now',
-                                                style: TextStyle(fontSize: 10),
+                                                style: TextStyle(fontSize: 10,color: UIData.darkColor),
                                               ),
                                             ),
                                             style: ElevatedButton.styleFrom(
@@ -134,12 +134,13 @@ class SalonCategoryList extends StatelessWidget {
                                                 maximumSize: Size(80, 30),
                                                 minimumSize: Size(40, 20)),
                                           ),
+                                          SizedBox(height: 5,),
                                           Text(
                                             ' \$ ${snap[index][name]}',
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontSize: 17,
                                                 fontWeight: FontWeight.bold,
-                                                color: Colors.black),
+                                                color: UIData.mainColor),
                                           ),
                                         ],
                                       )
@@ -149,7 +150,7 @@ class SalonCategoryList extends StatelessWidget {
                           )),
                     ),
                   );
-          }),
+          }}),
     );
   }
 }

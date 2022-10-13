@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:salon/uidata.dart';
 
 class MyColumn extends StatelessWidget {
   final String columnImg, columnTxt;
@@ -16,9 +17,9 @@ class MyColumn extends StatelessWidget {
           alignment: Alignment.center,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: columnBg,
+            color: UIData.darkColor,
           ),
-          child: Image(image: AssetImage(columnImg,),color: Colors.pink, fit: BoxFit.contain),
+          child: Image(image: AssetImage(columnImg,),color: UIData.mainColor, fit: BoxFit.contain),
         ),
         SizedBox(height: 10),
         Text(columnTxt,style: TextStyle(color: Colors.white),),

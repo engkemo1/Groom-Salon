@@ -10,19 +10,13 @@ class MyButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(gradient:LinearGradient(
-          begin: Alignment.topLeft,end: Alignment.bottomRight,
-          colors: [
-Colors.pink,
-        UIData.mainColor,
-
-      ]),borderRadius: BorderRadius.circular(25)),
+      decoration: BoxDecoration(color: UIData.mainColor,borderRadius: BorderRadius.circular(25)),
       width: MediaQuery.of(context).size.width * .4,
       height: 40,
       child: TextButton(
 
         onPressed: onpressed,
-        child: Text(btnText, style: TextStyle(color: Colors.white, 
+        child: Text(btnText, style: TextStyle(color: UIData.darkColor,
         fontSize: 15.5,
         fontWeight: FontWeight.w400)),
       ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:salon/pages/profileScreen.dart';
+import 'package:salon/pages/profile/profileScreen.dart';
 
 import '../../uidata.dart';
 import 'home.dart';

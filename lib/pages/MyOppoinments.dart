@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../uidata.dart';
+import '../viewModel/database_local/CacheHelper.dart';
 import 'home.dart';
 
 class MyAppoinments extends StatelessWidget {
@@ -17,7 +18,7 @@ class MyAppoinments extends StatelessWidget {
             Navigator.pop(context);
           },
 
-          icon: Icon(Icons.arrow_back_ios_new),
+          icon: Icon(Icons.arrow_back_ios_new,color: UIData.mainColor,),
         ),
 
         centerTitle: true,
@@ -36,22 +37,28 @@ class MyAppoinments extends StatelessWidget {
                 ),
 
     StreamBuilder(
-    stream: FirebaseFirestore.instance.collection('oppoinments').snapshots(),
+    stream: FirebaseFirestore.instance.collection('oppoinments').where('uid',isEqualTo: CacheHelper.get(key:'uid')).snapshots(),
     builder: (context, AsyncSnapshot snapshot) {
-    var snap = snapshot.data.docs;
-    return snapshot.connectionState == ConnectionState.waiting
-    ? const Center(
+    if(snapshot.connectionState == ConnectionState.waiting){
+    return
+    const Center(
     child: CircularProgressIndicator.adaptive(
     backgroundColor: UIData.mainColor,
     ),
-    )
-        :
-SizedBox(height: MediaQuery.of(context).size.height-100,child:
+    );
+    } else{
+      var snap = snapshot.data.docs;
+
+      return SizedBox(height: MediaQuery.of(context).size.height-100,child:
 ListView.builder(itemBuilder: (context,index){
+
+
   return   Card(
+    color: UIData.darkColor,
       margin: EdgeInsets.all(20),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(14.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -67,52 +74,23 @@ ListView.builder(itemBuilder: (context,index){
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(snap[index]['name'],style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 14),),
+                    Text(snap[index]['name'],style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 14),),
                     SizedBox(height: 6,),
                     Text(snap[index]['specialistName'],style: TextStyle(color: Colors.grey),),
                     SizedBox(height: 10,),
-                    Text('${snap[index]['date']} At ${snap[index]['from']}')
+                    Text('${snap[index]['date']} At ${snap[index]['from']}',style: TextStyle(color: Colors.white),)
                   ],
                 ),
               ],
             ),
             Column(
               children: [
-                Row(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: UIData.mainColor,
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      height: 25,
-                      width: 70,
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => HomePage()));
-                        },
-                        child: const Text(
-                          "Confirm",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 10,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
 
-                  ],
-                ),
-                SizedBox(height: 10,),
 
                 Padding(
                   padding: const EdgeInsets.only(right: 8.0),
                   child: Text("\$ ${snap[index]['price']}", style: TextStyle(
-                      color: Colors.black, fontSize: 17,fontWeight: FontWeight.bold
+                      color: UIData.mainColor, fontSize: 17,fontWeight: FontWeight.bold
                   )),
                 )
 
@@ -125,7 +103,7 @@ ListView.builder(itemBuilder: (context,index){
       ));
 
 },itemCount: snap.length,)
-  );  })
+  );  }})
 
 
               ]
